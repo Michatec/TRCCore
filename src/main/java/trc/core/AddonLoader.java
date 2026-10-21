@@ -3,7 +3,6 @@ package trc.core;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
 
-import org.jetbrains.annotations.Nullable;
 import trc.core.settings.SettingsManager;
 
 import java.util.ArrayList;
@@ -12,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class AddonLoader {
 

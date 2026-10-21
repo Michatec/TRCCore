@@ -1,5 +1,7 @@
 package trc.core.settings;
 
+import net.minecraft.network.chat.Component;
+
 public class IntSetting extends Setting {
     public int value;
     public int defaultValue;
@@ -9,7 +11,15 @@ public class IntSetting extends Setting {
     public boolean isInputField;
 
     public IntSetting(String id, String name, int initialValue, int min, int max, int milliStep, boolean inputField) {
-        super(id, name);
+        this(id, null, initialValue, min, max, milliStep, inputField, name);
+    }
+
+    public IntSetting(String id, Component translationComponent, int initialValue, int min, int max, int milliStep, boolean inputField) {
+        this(id, translationComponent, initialValue, min, max, milliStep, inputField, null);
+    }
+
+    public IntSetting(String id, Component translationComponent, int initialValue, int min, int max, int milliStep, boolean inputField, String name) {
+        super(id, translationComponent, name);
         this.value = initialValue;
         this.defaultValue = initialValue;
         this.minValue = min;

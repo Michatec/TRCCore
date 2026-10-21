@@ -11,6 +11,27 @@ Instead of managing settings for each TRC mod individually, this core library br
 
 - Version Compatibility: Currently only Fabric and Mc-version 26+
 
+## Opening the settings
+- Main menu: the button with the TRC icon, left of "Singleplayer", opens the settings screen
+  straight from the title screen. Closing it brings you back to the main menu.
+
+- In game: press U, or whatever you bound "TRC-Settings menu" to under Controls, in the
+  "TRC-Mods" category.
+
+- Command: /trc reads and changes settings from the chat, see "The /trc command" below.
+
+## Languages
+The settings screen, its buttons and TRC-Core's own settings follow your game language. English,
+German and Pirate Speak are included; any other language shows English.
+
+Mods built on TRC-Core can translate the names of their settings the same way. A mod that
+does not shows its setting names as it wrote them, and so does every name a translation is
+missing for.
+
+The server names TRC-Core's own server settings in the language your client uses, so they
+match the rest of your screen even on a server set to another language. Most chat messages
+and command output are in English.
+
 ## Editing server settings from the client
 Server-side settings no longer have to be edited by hand on the machine the server runs on.
 They appear in the same TRC settings screen as everything else, and changing one applies on

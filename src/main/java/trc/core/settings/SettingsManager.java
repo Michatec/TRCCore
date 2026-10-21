@@ -2,9 +2,9 @@ package trc.core.settings;
 
 import net.fabricmc.loader.api.FabricLoader;
 
-import trc.core.TRCLog;
+import net.minecraft.network.chat.Component;
 
-import com.google.gson.*;
+import trc.core.TRCLog;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -18,14 +18,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.google.gson.*;
+
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
 public class SettingsManager {
-    private static final Gson GSON = new GsonBuilder()
-            .registerTypeAdapter(Setting.class, new SettingAdapter())
-            .setPrettyPrinting()
-            .create();
 
     private static final int FLUSH_INTERVAL = 20;
     private final Map<String, ISettingsHolder> registeredMods = new HashMap<>();
@@ -51,9 +49,23 @@ public class SettingsManager {
         }
     }
 
-    public static Gson gson() { return GSON; }
+    private static final Gson GSON = new GsonBuilder()
+            .registerTypeAdapter(Setting.class, new SettingAdapter())
+            .setExclusionStrategies(new ExclusionStrategy() {
+                @Override
+                public boolean shouldSkipField(FieldAttributes f) {
+                    return Component.class.isAssignableFrom(f.getDeclaredClass());
+                }
+
+                @Override
+                public boolean shouldSkipClass(Class<?> clazz) { return false; }
+            })
+            .setPrettyPrinting()
+            .create();
 
     private static final String CLIENT_SUFFIX = "_client";
+
+    public static Gson gson() {return GSON;}
 
     public enum Side {
         COMMON,
@@ -200,13 +212,13 @@ public class SettingsManager {
         return holders;
     }
 
-    private boolean load(@NotNull ISettingsHolder holder) {
+    private void load(@NotNull ISettingsHolder holder) {
         String modId = holder.getModId();
         File file = new File(configFolder.toFile(), modId + ".json");
 
         if (!file.exists()) {
             unreadable.remove(modId);
-            return false;
+            return;
         }
 
         List<Setting> loadedSettings = new ArrayList<>();
@@ -239,7 +251,7 @@ public class SettingsManager {
             dirty.remove(modId);
             save(holder);
 
-            return changed;
+            return;
         }
 
         if (kept.isEmpty()) {
@@ -251,7 +263,7 @@ public class SettingsManager {
                     kept.size(), kept.size() == 1 ? "y" : "ies", modId);
         }
 
-        return syncSettings(holder.getSettings(), loadedSettings);
+        syncSettings(holder.getSettings(), loadedSettings);
     }
 
     private static boolean resetAll(@NotNull ISettingsHolder holder) {

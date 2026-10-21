@@ -13,7 +13,6 @@ import com.google.gson.JsonParseException;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.players.NameAndId;
 
-import org.jetbrains.annotations.Contract;
 import trc.core.TRCLog;
 
 import java.io.File;
@@ -27,6 +26,8 @@ import java.util.UUID;
 
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
+
+import org.jetbrains.annotations.Contract;
 
 public final class SettingsAccessList {
     private static final Gson GSON = new GsonBuilder()

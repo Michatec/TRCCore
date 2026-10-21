@@ -62,14 +62,12 @@ public final class ClientSettingsCache {
     }
 
 
-    public static void edit(String modId, @NotNull Setting setting) {
-        send(modId, setting, false);
-    }
+    public static void edit(String modId, @NotNull Setting setting) { send(modId, setting, false); }
 
     public static void preview(String modId, @NotNull Setting setting) {
         Minecraft client = Minecraft.getInstance();
 
-        if (client == null || !client.hasSingleplayerServer()) return;
+        if (!client.hasSingleplayerServer()) return;
 
         send(modId, setting, true);
     }
